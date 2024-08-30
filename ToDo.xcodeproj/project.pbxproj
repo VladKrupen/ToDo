@@ -9,19 +9,33 @@
 /* Begin PBXBuildFile section */
 		013FBEEA2C81C85500A12A40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBEE92C81C85500A12A40 /* AppDelegate.swift */; };
 		013FBEEC2C81C85500A12A40 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBEEB2C81C85500A12A40 /* SceneDelegate.swift */; };
-		013FBEEE2C81C85500A12A40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBEED2C81C85500A12A40 /* ViewController.swift */; };
 		013FBEF32C81C85700A12A40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 013FBEF22C81C85700A12A40 /* Assets.xcassets */; };
 		013FBEF62C81C85700A12A40 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 013FBEF52C81C85700A12A40 /* Base */; };
+		013FBF082C81D06800A12A40 /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF072C81D06800A12A40 /* ToDoViewController.swift */; };
+		013FBF0A2C81D0C400A12A40 /* ToDoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF092C81D0C400A12A40 /* ToDoPresenter.swift */; };
+		013FBF0C2C81D10D00A12A40 /* ToDoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF0B2C81D10D00A12A40 /* ToDoInteractor.swift */; };
+		013FBF0E2C81D14D00A12A40 /* ToDoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF0D2C81D14D00A12A40 /* ToDoRouter.swift */; };
+		013FBF112C81D26100A12A40 /* ModuleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF102C81D26100A12A40 /* ModuleFactory.swift */; };
+		013FBF212C81D76100A12A40 /* ToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF202C81D76100A12A40 /* ToDoView.swift */; };
+		013FBF232C81D8C000A12A40 /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF222C81D8C000A12A40 /* ToDoCell.swift */; };
+		013FBF292C822E2E00A12A40 /* AppAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FBF282C822E2E00A12A40 /* AppAssets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		013FBEE62C81C85500A12A40 /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		013FBEE92C81C85500A12A40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		013FBEEB2C81C85500A12A40 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		013FBEED2C81C85500A12A40 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		013FBEF22C81C85700A12A40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		013FBEF52C81C85700A12A40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		013FBEF72C81C85700A12A40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		013FBF072C81D06800A12A40 /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
+		013FBF092C81D0C400A12A40 /* ToDoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoPresenter.swift; sourceTree = "<group>"; };
+		013FBF0B2C81D10D00A12A40 /* ToDoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoInteractor.swift; sourceTree = "<group>"; };
+		013FBF0D2C81D14D00A12A40 /* ToDoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoRouter.swift; sourceTree = "<group>"; };
+		013FBF102C81D26100A12A40 /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
+		013FBF202C81D76100A12A40 /* ToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoView.swift; sourceTree = "<group>"; };
+		013FBF222C81D8C000A12A40 /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
+		013FBF282C822E2E00A12A40 /* AppAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAssets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +70,9 @@
 			children = (
 				013FBEFD2C81C89700A12A40 /* Application */,
 				013FBEFE2C81C8AB00A12A40 /* Resources */,
-				013FBEED2C81C85500A12A40 /* ViewController.swift */,
+				013FBF272C822D8500A12A40 /* Helper */,
+				013FBF0F2C81D24100A12A40 /* Factorie */,
+				013FBEFF2C81CED500A12A40 /* ToDoModule */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -78,6 +94,91 @@
 				013FBEF72C81C85700A12A40 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		013FBEFF2C81CED500A12A40 /* ToDoModule */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF002C81CEEB00A12A40 /* UI */,
+				013FBF022C81CF0500A12A40 /* Presenter */,
+				013FBF012C81CEFA00A12A40 /* Interactor */,
+				013FBF032C81CF1500A12A40 /* Router */,
+			);
+			path = ToDoModule;
+			sourceTree = "<group>";
+		};
+		013FBF002C81CEEB00A12A40 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF042C81CF4A00A12A40 /* Controller */,
+				013FBF052C81CF4E00A12A40 /* View */,
+				013FBF242C81D8C600A12A40 /* Cell */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		013FBF012C81CEFA00A12A40 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF0B2C81D10D00A12A40 /* ToDoInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		013FBF022C81CF0500A12A40 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF092C81D0C400A12A40 /* ToDoPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		013FBF032C81CF1500A12A40 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF0D2C81D14D00A12A40 /* ToDoRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		013FBF042C81CF4A00A12A40 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF072C81D06800A12A40 /* ToDoViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		013FBF052C81CF4E00A12A40 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF202C81D76100A12A40 /* ToDoView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		013FBF0F2C81D24100A12A40 /* Factorie */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF102C81D26100A12A40 /* ModuleFactory.swift */,
+			);
+			path = Factorie;
+			sourceTree = "<group>";
+		};
+		013FBF242C81D8C600A12A40 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF222C81D8C000A12A40 /* ToDoCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		013FBF272C822D8500A12A40 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				013FBF282C822E2E00A12A40 /* AppAssets.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +251,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				013FBEEE2C81C85500A12A40 /* ViewController.swift in Sources */,
+				013FBF0A2C81D0C400A12A40 /* ToDoPresenter.swift in Sources */,
 				013FBEEA2C81C85500A12A40 /* AppDelegate.swift in Sources */,
+				013FBF212C81D76100A12A40 /* ToDoView.swift in Sources */,
+				013FBF0E2C81D14D00A12A40 /* ToDoRouter.swift in Sources */,
+				013FBF082C81D06800A12A40 /* ToDoViewController.swift in Sources */,
+				013FBF0C2C81D10D00A12A40 /* ToDoInteractor.swift in Sources */,
 				013FBEEC2C81C85500A12A40 /* SceneDelegate.swift in Sources */,
+				013FBF232C81D8C000A12A40 /* ToDoCell.swift in Sources */,
+				013FBF292C822E2E00A12A40 /* AppAssets.swift in Sources */,
+				013FBF112C81D26100A12A40 /* ModuleFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
