@@ -35,6 +35,10 @@ final class ToDoView: UIView {
         tableView.dataSource = dataSource
     }
     
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
     //MARK: Layout
     private func layoutTableView() {
         addSubview(tableView)

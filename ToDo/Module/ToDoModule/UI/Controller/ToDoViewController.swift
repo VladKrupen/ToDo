@@ -18,6 +18,7 @@ final class ToDoViewController: UIViewController {
     
     //MARK: Private
     private let toDoView = ToDoView()
+    var tasks: [ToDo] = []
     
     //MARK: View lifecycle
     override func loadView() {
@@ -31,7 +32,20 @@ final class ToDoViewController: UIViewController {
         setupNavigationItem()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let result = presenter?.getTasks() else {
+            return
+        }
+        tasks = result
+        reloadData()
+    }
+    
     //MARK: Setup
+    func reloadData() {
+        toDoView.reloadData()
+    }
+    
     private func setupNavigationItem() {
         navigationItem.title = AppAssets.navigationItemTitle
         let rightBarButton = UIBarButtonItem(image: UIImage(systemName: AppAssets.navigationItemButtonImage), style: .plain, target: self, action: #selector(rightBarButtonTapped))
@@ -55,16 +69,19 @@ extension ToDoViewController: ToDoViewProtocol {
 //MARK: UITableViewDataSource
 extension ToDoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ToDoCell.self), for: indexPath) as? ToDoCell else {
             return UITableViewCell()
         }
-        cell.setupCell(bool: false)
+        var task = tasks[indexPath.row]
+        print(task)
+        cell.setupCell(title: task.title!, date: task.date!, description: task.description!, bool: task.completed!)
         cell.checkmarkImageViewAction = { [weak self] bool in
-            
+            task.completed = bool
+            self?.presenter?.updateTask(task: task)
         }
         return cell
     }
@@ -74,7 +91,7 @@ extension ToDoViewController: UITableViewDataSource {
 extension ToDoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { action, view, completion in
-            
+            self.tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             completion(true)
         }

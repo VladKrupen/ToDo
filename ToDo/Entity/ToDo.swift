@@ -8,9 +8,9 @@
 import Foundation
 
 struct ToDo {
-    var id: Int?
+    var id: String?
     var title: String?
     var description: String?
-    var completed: String?
+    var completed: Bool?
     var date: String?
 }

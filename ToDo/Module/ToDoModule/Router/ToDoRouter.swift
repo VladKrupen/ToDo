@@ -13,11 +13,15 @@ protocol ToDoRouterProtocol: AnyObject {
 
 final class ToDoRouter: ToDoRouterProtocol {
     
-    weak var viewController: UIViewController?
+    weak var viewController: ToDoViewController?
+    var presenter: ToDoPresenterProtocol?
     
     func showTaskManagerModule(task: ToDo) {
         let taskManagerViewController = ModuleFactory.createTaskManagerModule(task: task)
         taskManagerViewController.modalPresentationStyle = .fullScreen
         viewController?.present(taskManagerViewController, animated: true)
+        taskManagerViewController.todoTransferHandler = { [weak self] task in
+            self?.presenter?.appendTask(task: task)
+        }
     }
 }

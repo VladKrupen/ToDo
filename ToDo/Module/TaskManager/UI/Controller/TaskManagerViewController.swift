@@ -9,12 +9,14 @@ import UIKit
 
 protocol TaskManagerViewProtocol: AnyObject {
     func updateView(task: ToDo)
+    func presentIncompleteFieldsAlert()
 }
 
 final class TaskManagerViewController: UIViewController {
     
     //MARK: Public
     var presenter: TaskManagerPresenterProtocol?
+    var todoTransferHandler: ((ToDo) -> Void)?
     
     //MARK: Private
     private let taskManagerView = TaskManagerView()
@@ -47,6 +49,15 @@ final class TaskManagerViewController: UIViewController {
             self?.presenter?.didTapCancelButton()
         }
     }
+    
+    private func showIncompleteFieldsAlert() {
+        let alertController = UIAlertController(title: nil, message: "Заполните поле Title", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Хорошо", style: .default)
+        alertController.addAction(okAction)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alertController, animated: true)
+        }
+    }
 }
 
 //MARK: TaskManagerViewProtocol
@@ -57,5 +68,9 @@ extension TaskManagerViewController: TaskManagerViewProtocol {
             return
         }
         taskManagerView.configuration(title: title, description: description)
+    }
+    
+    func presentIncompleteFieldsAlert() {
+        showIncompleteFieldsAlert()
     }
 }

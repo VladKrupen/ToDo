@@ -16,6 +16,7 @@ final class ModuleFactory {
         viewController.presenter = presenter
         interactor.presenter = presenter
         router.viewController = viewController
+        router.presenter = presenter
         return viewController
     }
     

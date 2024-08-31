@@ -20,6 +20,16 @@ final class TaskManagerInteractor {
     init(task: ToDo) {
         self.task = task
     }
+    
+    private func createTask(title: String, description: String) -> ToDo {
+        let id = UUID().uuidString
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy\nHH:mm:ss"
+        let dateString = dateFormatter.string(from: currentDate)
+        let newTask = ToDo(id: id, title: title, description: description, completed: false, date: dateString)
+        return newTask
+    }
 }
 
 extension TaskManagerInteractor: TaskManagerInteractorProtocol {
@@ -29,7 +39,10 @@ extension TaskManagerInteractor: TaskManagerInteractorProtocol {
     
     func didTapDoneButton(title: String, description: String) {
         guard !title.isEmpty else {
+            presenter?.presentIncompleteFieldsAlert()
             return
         }
+        let newTask = createTask(title: title, description: description)
+        presenter?.navigateToToDoModule(task: newTask)
     }
 }

@@ -86,10 +86,10 @@ final class ToDoCell: UITableViewCell {
     }
     
     //MARK: Setup
-    func setupCell(bool: Bool) {
-        titleLabel.text = "Задача"
-        dateLabel.text = "30.08.2024\n17:25:56"
-        descriptionLabel.text = "Нужно заказать кучу всего в интенернет магазине телевизор, монитр, компьбтер, подставку, телефон, стиралку"
+    func setupCell(title: String, date: String, description: String, bool: Bool) {
+        titleLabel.text = title
+        dateLabel.text = date
+        descriptionLabel.text = description
         checked = bool
     }
     
