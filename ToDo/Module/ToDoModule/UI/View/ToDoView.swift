@@ -13,7 +13,7 @@ final class ToDoView: UIView {
     private let tableView: UITableView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.separatorStyle = .none
-        $0.backgroundColor = .systemGray6
+        $0.backgroundColor = .white
         $0.register(ToDoCell.self, forCellReuseIdentifier: String(describing: ToDoCell.self))
         return $0
     }(UITableView())

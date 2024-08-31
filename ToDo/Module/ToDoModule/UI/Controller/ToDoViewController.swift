@@ -31,6 +31,7 @@ final class ToDoViewController: UIViewController {
         setupNavigationItem()
     }
     
+    //MARK: Setup
     private func setupNavigationItem() {
         navigationItem.title = AppAssets.navigationItemTitle
         let rightBarButton = UIBarButtonItem(image: UIImage(systemName: AppAssets.navigationItemButtonImage), style: .plain, target: self, action: #selector(rightBarButtonTapped))
@@ -41,7 +42,7 @@ final class ToDoViewController: UIViewController {
 //MARK: OBJC
 extension ToDoViewController {
     @objc private func rightBarButtonTapped() {
-        
+        presenter?.showTaskManagerModule()
     }
 }
 

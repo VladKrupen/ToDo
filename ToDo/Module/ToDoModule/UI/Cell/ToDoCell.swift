@@ -9,8 +9,10 @@ import UIKit
 
 final class ToDoCell: UITableViewCell {
     
+    //MARK: Public
     var checkmarkImageViewAction: ((Bool) -> Void)?
     
+    //MARK: Private
     private var checked: Bool = true {
         didSet {
             checked ? (checkmarkImageView.image = UIImage(systemName: AppAssets.checkmarkImage)) : (checkmarkImageView.image = UIImage(systemName: AppAssets.imageSquare))
@@ -21,7 +23,7 @@ final class ToDoCell: UITableViewCell {
     private let customView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.layer.cornerRadius = 15
-        $0.backgroundColor = .white
+        $0.backgroundColor = .systemGray6
         return $0
     }(UIView())
     
@@ -74,16 +76,16 @@ final class ToDoCell: UITableViewCell {
     //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .systemGray6
+        contentView.backgroundColor = .white
         layoutElements()
         setupGesture()
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: Setup
     func setupCell(bool: Bool) {
         titleLabel.text = "Задача"
         dateLabel.text = "30.08.2024\n17:25:56"
@@ -107,8 +109,8 @@ final class ToDoCell: UITableViewCell {
         contentView.addSubview(customView)
         
         NSLayoutConstraint.activate([
-            customView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            customView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            customView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            customView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             customView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             customView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
         ])
@@ -142,6 +144,7 @@ final class ToDoCell: UITableViewCell {
     }
 }
 
+//MARK: OBJC
 extension ToDoCell {
     @objc private func checkmarkImageViewTapped() {
         checked.toggle()
