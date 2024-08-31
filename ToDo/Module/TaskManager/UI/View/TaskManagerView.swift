@@ -9,21 +9,27 @@ import UIKit
 
 final class TaskManagerView: UIView {
     
+    var doneButtonAction: ((String, String) -> Void)?
+    var cancelButtonAction: (() -> Void)?
+    
     private var lastContentOffset: CGFloat = 0
-    private var titleTask: String = ""
-    private var descriptionTask: String = ""
     
     //MARK: UI
     private lazy var doneButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitle("Done", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: 30)
-        $0.backgroundColor = .systemBlue
-        $0.layer.cornerRadius = 15
-        $0.isEnabled = false
-        $0.layer.opacity = 0.4
+        $0.setTitle(AppAssets.doneButton, for: .normal)
+        $0.setTitleColor(.systemBlue, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         $0.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
+    private lazy var cancelButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setTitle(AppAssets.cancelButton, for: .normal)
+        $0.setTitleColor(.systemBlue, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        $0.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
     
@@ -31,7 +37,7 @@ final class TaskManagerView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textAlignment = .left
         $0.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        $0.placeholder = "Title"
+        $0.placeholder = AppAssets.titleTextField
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 15
         $0.layer.borderColor = UIColor.systemBlue.cgColor
@@ -73,8 +79,6 @@ final class TaskManagerView: UIView {
     func configuration(title: String, description: String) {
         titleTextField.text = title
         descriptionTextView.text = description
-        titleTask = title
-        descriptionTask = title
     }
     
     //MARK: Setup
@@ -92,6 +96,7 @@ final class TaskManagerView: UIView {
     //MARK: Layout
     private func layoutElements() {
         layoutDoneButton()
+        layoutCancelButton()
         layoutTitleTextField()
         layoutDescriptionTextView()
     }
@@ -101,8 +106,16 @@ final class TaskManagerView: UIView {
         
         NSLayoutConstraint.activate([
             doneButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            doneButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
             doneButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
+        ])
+    }
+    
+    private func layoutCancelButton() {
+        addSubview(cancelButton)
+        
+        NSLayoutConstraint.activate([
+            cancelButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            cancelButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
         ])
     }
     
@@ -139,9 +152,15 @@ extension TaskManagerView {
     
     @objc private func doneButtonTapped() {
         endEditing(true)
-        print(titleTextField.text)
-        print(descriptionTextView.text)
-        print(1)
+        guard let title = titleTextField.text, let description = descriptionTextView.text else {
+            return
+        }
+        doneButtonAction?(title, description)
+    }
+    
+    @objc private func cancelButtonTapped() {
+        endEditing(true)
+        cancelButtonAction?()
     }
     
     @objc private func keyboardWillShow(_ notification: Notification) {

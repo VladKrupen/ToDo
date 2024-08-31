@@ -12,4 +12,7 @@ struct AppAssets {
     static let navigationItemButtonImage: String = "plus"
     static let imageSquare: String = "square"
     static let checkmarkImage: String = "checkmark.square"
+    static let doneButton: String = "Done"
+    static let cancelButton: String = "Cancel"
+    static let titleTextField: String = "Title"
 }

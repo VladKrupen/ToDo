@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ToDoPresenterProtocol: AnyObject {
-    func showTaskManagerModule()
+    func showTaskManagerModule(task: ToDo)
 }
 
 final class ToDoPresenter {
@@ -25,7 +25,7 @@ final class ToDoPresenter {
 }
 
 extension ToDoPresenter: ToDoPresenterProtocol {
-    func showTaskManagerModule() {
-        router.showTaskManagerModule()
+    func showTaskManagerModule(task: ToDo) {
+        router.showTaskManagerModule(task: task)
     }
 }

@@ -8,15 +8,16 @@
 import UIKit
 
 protocol ToDoRouterProtocol: AnyObject {
-   func showTaskManagerModule()
+    func showTaskManagerModule(task: ToDo)
 }
 
 final class ToDoRouter: ToDoRouterProtocol {
     
     weak var viewController: UIViewController?
     
-    func showTaskManagerModule() {
-        let taskManagerViewController = ModuleFactory.createTaskManagerModule()
-        viewController?.navigationController?.pushViewController(taskManagerViewController, animated: true)
+    func showTaskManagerModule(task: ToDo) {
+        let taskManagerViewController = ModuleFactory.createTaskManagerModule(task: task)
+        taskManagerViewController.modalPresentationStyle = .fullScreen
+        viewController?.present(taskManagerViewController, animated: true)
     }
 }

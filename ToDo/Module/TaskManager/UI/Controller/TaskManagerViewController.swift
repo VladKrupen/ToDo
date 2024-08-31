@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TaskManagerViewProtocol: AnyObject {
-    
+    func updateView(task: ToDo)
 }
 
 final class TaskManagerViewController: UIViewController {
@@ -27,11 +27,35 @@ final class TaskManagerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        taskManagerView.configuration(title: "Задача", description: "Описание")
+        presenter?.viewDidLoaded()
+        handleButtonTapActions()
+    }
+    
+    private func handleButtonTapActions() {
+        doneButtonTapped()
+        cancelButtonTapped()
+    }
+    
+    private func doneButtonTapped() {
+        taskManagerView.doneButtonAction = { [weak self] title, description in
+            self?.presenter?.didTapDoneButton(title: title, description: description)
+        }
+    }
+    
+    private func cancelButtonTapped() {
+        taskManagerView.cancelButtonAction = { [weak self] in
+            self?.presenter?.didTapCancelButton()
+        }
     }
 }
 
 //MARK: TaskManagerViewProtocol
 extension TaskManagerViewController: TaskManagerViewProtocol {
-    
+    func updateView(task: ToDo) {
+        guard let title = task.title, let description = task.description else {
+            taskManagerView.configuration(title: "", description: "")
+            return
+        }
+        taskManagerView.configuration(title: title, description: description)
+    }
 }

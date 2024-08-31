@@ -42,7 +42,8 @@ final class ToDoViewController: UIViewController {
 //MARK: OBJC
 extension ToDoViewController {
     @objc private func rightBarButtonTapped() {
-        presenter?.showTaskManagerModule()
+        let task = ToDo()
+        presenter?.showTaskManagerModule(task: task)
     }
 }
 
