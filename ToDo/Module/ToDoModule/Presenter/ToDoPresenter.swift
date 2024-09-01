@@ -11,7 +11,8 @@ protocol ToDoPresenterProtocol: AnyObject {
     func showTaskManagerModule(task: ToDo)
     func getTasks() -> [ToDo]
     func appendTask(task: ToDo)
-    func updateTask(task: ToDo)
+    func updateTaskReadinessStatus(task: ToDo)
+    func deleteTask(task: ToDo)
 }
 
 final class ToDoPresenter {
@@ -28,8 +29,12 @@ final class ToDoPresenter {
 }
 
 extension ToDoPresenter: ToDoPresenterProtocol {
-    func updateTask(task: ToDo) {
-        interactor.updateTask(task: task)
+    func deleteTask(task: ToDo) {
+        interactor.deleteTask(task: task)
+    }
+    
+    func updateTaskReadinessStatus(task: ToDo) {
+        interactor.updateTaskReadinessStatus(task: task)
     }
     
     func appendTask(task: ToDo) {

@@ -10,7 +10,8 @@ import Foundation
 protocol ToDoInteractorProtocol: AnyObject {
     func getTasks() -> [ToDo]
     func appendTask(task: ToDo)
-    func updateTask(task: ToDo)
+    func updateTaskReadinessStatus(task: ToDo)
+    func deleteTask(task: ToDo)
 }
 
 final class ToDoInteractor {
@@ -18,6 +19,18 @@ final class ToDoInteractor {
     weak var presenter: ToDoPresenterProtocol?
     private var tasks: [ToDo] = []
     
+    private func findIdTask(id: String?) -> Int? {
+        var indexTask: Int?
+        for (index, task) in tasks.enumerated() {
+            if task.id == id {
+                indexTask = index
+            }
+        }
+        guard let indexTask = indexTask else {
+            return nil
+        }
+        return indexTask
+    }
 }
 
 extension ToDoInteractor: ToDoInteractorProtocol {
@@ -26,19 +39,20 @@ extension ToDoInteractor: ToDoInteractorProtocol {
     }
     
     func appendTask(task: ToDo) {
-        tasks.append(task)
+        tasks.insert(task, at: 0)
     }
     
-    func updateTask(task: ToDo) {
-        var indexTask: Int?
-        for (index, item) in tasks.enumerated() {
-            if item.id == task.id {
-                indexTask = index
-            }
-        }
-        guard let indexTask = indexTask else {
+    func updateTaskReadinessStatus(task: ToDo) {
+        guard let id = findIdTask(id: task.id) else {
             return
         }
-        tasks[indexTask].completed = task.completed
+        tasks[id].completed = task.completed
+    }
+    
+    func deleteTask(task: ToDo) {
+        guard let id = findIdTask(id: task.id) else {
+            return
+        }
+        tasks.remove(at: id)
     }
 }

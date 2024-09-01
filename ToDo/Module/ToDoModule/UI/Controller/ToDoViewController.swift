@@ -77,11 +77,10 @@ extension ToDoViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         var task = tasks[indexPath.row]
-        print(task)
         cell.setupCell(title: task.title!, date: task.date!, description: task.description!, bool: task.completed!)
         cell.checkmarkImageViewAction = { [weak self] bool in
             task.completed = bool
-            self?.presenter?.updateTask(task: task)
+            self?.presenter?.updateTaskReadinessStatus(task: task)
         }
         return cell
     }
@@ -91,6 +90,7 @@ extension ToDoViewController: UITableViewDataSource {
 extension ToDoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { action, view, completion in
+            self.presenter?.deleteTask(task: self.tasks[indexPath.row])
             self.tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             completion(true)

@@ -80,11 +80,11 @@
 		013FBEE82C81C85500A12A40 /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
-				0168D27E2C836E92007F26C1 /* Entity */,
 				013FBEFD2C81C89700A12A40 /* Application */,
 				013FBEFE2C81C8AB00A12A40 /* Resources */,
 				013FBF272C822D8500A12A40 /* Helper */,
 				013FBF0F2C81D24100A12A40 /* Factorie */,
+				0168D27E2C836E92007F26C1 /* Entity */,
 				013FBF2A2C830B3C00A12A40 /* Module */,
 			);
 			path = ToDo;
