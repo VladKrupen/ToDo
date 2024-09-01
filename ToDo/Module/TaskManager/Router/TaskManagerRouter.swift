@@ -9,7 +9,7 @@ import UIKit
 
 protocol TaskManagerRouterProtocol: AnyObject {
     func dismissTaskManagerModule()
-    func navigateToToDoModule(task: ToDo)
+    func navigateToToDoModule(task: ToDo, action: UserAction)
 }
 
 final class TaskManagerRouter: TaskManagerRouterProtocol {
@@ -20,8 +20,8 @@ final class TaskManagerRouter: TaskManagerRouterProtocol {
         viewController?.dismiss(animated: true)
     }
     
-    func navigateToToDoModule(task: ToDo) {
-        viewController?.todoTransferHandler?(task)
+    func navigateToToDoModule(task: ToDo, action: UserAction) {
+        viewController?.todoTransferHandler?(task, action)
         viewController?.dismiss(animated: true)
     }
 }

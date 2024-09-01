@@ -10,9 +10,9 @@ import Foundation
 protocol TaskManagerPresenterProtocol: AnyObject {
     func viewDidLoaded()
     func didTapDoneButton(title: String, description: String)
-    func didTapCancelButton()
+    func dismissTaskManagerModule()
     func presentIncompleteFieldsAlert()
-    func navigateToToDoModule(task: ToDo)
+    func navigateToToDoModule(task: ToDo, action: UserAction)
 }
 
 final class TaskManagerPresenter {
@@ -29,15 +29,15 @@ final class TaskManagerPresenter {
 }
 
 extension TaskManagerPresenter: TaskManagerPresenterProtocol {
-    func navigateToToDoModule(task: ToDo) {
-        router.navigateToToDoModule(task: task)
+    func navigateToToDoModule(task: ToDo, action: UserAction) {
+        router.navigateToToDoModule(task: task, action: action)
     }
     
     func didTapDoneButton(title: String, description: String) {
         interactor.didTapDoneButton(title: title, description: description)
     }
     
-    func didTapCancelButton() {
+    func dismissTaskManagerModule() {
         router.dismissTaskManagerModule()
     }
     

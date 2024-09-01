@@ -16,7 +16,7 @@ final class TaskManagerViewController: UIViewController {
     
     //MARK: Public
     var presenter: TaskManagerPresenterProtocol?
-    var todoTransferHandler: ((ToDo) -> Void)?
+    var todoTransferHandler: ((ToDo, UserAction) -> Void)?
     
     //MARK: Private
     private let taskManagerView = TaskManagerView()
@@ -46,13 +46,13 @@ final class TaskManagerViewController: UIViewController {
     
     private func cancelButtonTapped() {
         taskManagerView.cancelButtonAction = { [weak self] in
-            self?.presenter?.didTapCancelButton()
+            self?.presenter?.dismissTaskManagerModule()
         }
     }
     
     private func showIncompleteFieldsAlert() {
-        let alertController = UIAlertController(title: nil, message: "Заполните поле Title", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Хорошо", style: .default)
+        let alertController = UIAlertController(title: nil, message: AppAssets.alertEmptyFieldsMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: AppAssets.alertEmptyFieldsAction, style: .default)
         alertController.addAction(okAction)
         DispatchQueue.main.async { [weak self] in
             self?.present(alertController, animated: true)

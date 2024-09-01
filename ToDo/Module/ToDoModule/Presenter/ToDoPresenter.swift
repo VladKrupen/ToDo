@@ -8,9 +8,9 @@
 import Foundation
 
 protocol ToDoPresenterProtocol: AnyObject {
-    func showTaskManagerModule(task: ToDo)
+    func showTaskManagerModule(task: ToDo, action: UserAction)
     func getTasks() -> [ToDo]
-    func appendTask(task: ToDo)
+    func updateTasks(task: ToDo, action: UserAction)
     func updateTaskReadinessStatus(task: ToDo)
     func deleteTask(task: ToDo)
 }
@@ -37,12 +37,12 @@ extension ToDoPresenter: ToDoPresenterProtocol {
         interactor.updateTaskReadinessStatus(task: task)
     }
     
-    func appendTask(task: ToDo) {
-        interactor.appendTask(task: task)
+    func updateTasks(task: ToDo, action: UserAction) {
+        interactor.updateTasks(task: task, action: action)
     }
     
-    func showTaskManagerModule(task: ToDo) {
-        router.showTaskManagerModule(task: task)
+    func showTaskManagerModule(task: ToDo, action: UserAction) {
+        router.showTaskManagerModule(task: task, action: action)
     }
     
     func getTasks() -> [ToDo] {

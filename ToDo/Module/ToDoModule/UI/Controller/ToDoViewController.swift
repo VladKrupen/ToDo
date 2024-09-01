@@ -57,7 +57,7 @@ final class ToDoViewController: UIViewController {
 extension ToDoViewController {
     @objc private func rightBarButtonTapped() {
         let task = ToDo()
-        presenter?.showTaskManagerModule(task: task)
+        presenter?.showTaskManagerModule(task: task, action: .buttonAction)
     }
 }
 
@@ -89,7 +89,7 @@ extension ToDoViewController: UITableViewDataSource {
 //MARK: UITableViewDelegate
 extension ToDoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { action, view, completion in
+        let deleteAction = UIContextualAction(style: .destructive, title: AppAssets.deleteCell) { action, view, completion in
             self.presenter?.deleteTask(task: self.tasks[indexPath.row])
             self.tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -98,5 +98,10 @@ extension ToDoViewController: UITableViewDelegate {
         
         let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipeActionsConfiguration
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = tasks[indexPath.row]
+        presenter?.showTaskManagerModule(task: task, action: .cellAction)
     }
 }

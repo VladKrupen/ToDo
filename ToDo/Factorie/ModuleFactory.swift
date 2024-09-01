@@ -20,9 +20,9 @@ final class ModuleFactory {
         return viewController
     }
     
-    static func createTaskManagerModule(task: ToDo) -> TaskManagerViewController {
+    static func createTaskManagerModule(task: ToDo, action: UserAction) -> TaskManagerViewController {
         let viewController = TaskManagerViewController()
-        let interactor = TaskManagerInteractor(task: task)
+        let interactor = TaskManagerInteractor(task: task, action: action)
         let router = TaskManagerRouter()
         let presenter = TaskManagerPresenter(view: viewController, interactor: interactor, router: router)
         viewController.presenter = presenter

@@ -16,9 +16,11 @@ final class TaskManagerInteractor {
     
     weak var presenter: TaskManagerPresenterProtocol?
     private var task: ToDo
+    private let action: UserAction
     
-    init(task: ToDo) {
+    init(task: ToDo, action: UserAction) {
         self.task = task
+        self.action = action
     }
     
     private func createTask(title: String, description: String) -> ToDo {
@@ -30,6 +32,29 @@ final class TaskManagerInteractor {
         let newTask = ToDo(id: id, title: title, description: description, completed: false, date: dateString)
         return newTask
     }
+    
+    private func manageTaskCreation(title: String, description: String) {
+        guard !title.isEmpty else {
+            presenter?.presentIncompleteFieldsAlert()
+            return
+        }
+        let newTask = createTask(title: title, description: description)
+        presenter?.navigateToToDoModule(task: newTask, action: action)
+    }
+    
+    private func manageTaskEditing(title: String, description: String) {
+        guard !title.isEmpty else {
+            presenter?.presentIncompleteFieldsAlert()
+            return
+        }
+        guard title != task.title || description != task.description else {
+            presenter?.dismissTaskManagerModule()
+            return
+        }
+        task.title = title
+        task.description = description
+        presenter?.navigateToToDoModule(task: task, action: action)
+    }
 }
 
 extension TaskManagerInteractor: TaskManagerInteractorProtocol {
@@ -38,11 +63,12 @@ extension TaskManagerInteractor: TaskManagerInteractorProtocol {
     }
     
     func didTapDoneButton(title: String, description: String) {
-        guard !title.isEmpty else {
-            presenter?.presentIncompleteFieldsAlert()
-            return
+        switch action {
+        case .buttonAction:
+            manageTaskCreation(title: title, description: description)
+        case .cellAction:
+            manageTaskEditing(title: title, description: description)
         }
-        let newTask = createTask(title: title, description: description)
-        presenter?.navigateToToDoModule(task: newTask)
+       
     }
 }

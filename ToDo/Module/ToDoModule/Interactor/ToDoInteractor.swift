@@ -9,7 +9,7 @@ import Foundation
 
 protocol ToDoInteractorProtocol: AnyObject {
     func getTasks() -> [ToDo]
-    func appendTask(task: ToDo)
+    func updateTasks(task: ToDo, action: UserAction)
     func updateTaskReadinessStatus(task: ToDo)
     func deleteTask(task: ToDo)
 }
@@ -31,6 +31,17 @@ final class ToDoInteractor {
         }
         return indexTask
     }
+    
+    private func appendTask(task: ToDo) {
+        tasks.insert(task, at: 0)
+    }
+    
+    private func changeTask(task: ToDo) {
+        guard let id = findIdTask(id: task.id) else {
+            return
+        }
+        tasks[id] = task
+    }
 }
 
 extension ToDoInteractor: ToDoInteractorProtocol {
@@ -38,8 +49,13 @@ extension ToDoInteractor: ToDoInteractorProtocol {
         return tasks
     }
     
-    func appendTask(task: ToDo) {
-        tasks.insert(task, at: 0)
+    func updateTasks(task: ToDo, action: UserAction) {
+        switch action {
+        case .buttonAction:
+            appendTask(task: task)
+        case .cellAction:
+            changeTask(task: task)
+        }
     }
     
     func updateTaskReadinessStatus(task: ToDo) {

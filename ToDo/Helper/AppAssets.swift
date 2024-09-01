@@ -15,4 +15,7 @@ struct AppAssets {
     static let doneButton: String = "Done"
     static let cancelButton: String = "Cancel"
     static let titleTextField: String = "Title"
+    static let deleteCell: String = "Delete"
+    static let alertEmptyFieldsMessage: String = "Заполните поле Title"
+    static let alertEmptyFieldsAction: String = "Хорошо"
 }
