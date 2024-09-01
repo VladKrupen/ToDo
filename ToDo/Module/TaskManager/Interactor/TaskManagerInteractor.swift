@@ -33,9 +33,16 @@ final class TaskManagerInteractor {
         return newTask
     }
     
-    private func manageTaskCreation(title: String, description: String) {
+    private func checkAndHandleEmptyFields(title: String) -> Bool {
         guard !title.isEmpty else {
             presenter?.presentIncompleteFieldsAlert()
+            return false
+        }
+        return true
+    }
+    
+    private func manageTaskCreation(title: String, description: String) {
+        guard checkAndHandleEmptyFields(title: title) else {
             return
         }
         let newTask = createTask(title: title, description: description)
@@ -43,8 +50,7 @@ final class TaskManagerInteractor {
     }
     
     private func manageTaskEditing(title: String, description: String) {
-        guard !title.isEmpty else {
-            presenter?.presentIncompleteFieldsAlert()
+        guard checkAndHandleEmptyFields(title: title) else {
             return
         }
         guard title != task.title || description != task.description else {

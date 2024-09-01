@@ -80,6 +80,7 @@ extension ToDoViewController: UITableViewDataSource {
         cell.setupCell(title: task.title!, date: task.date!, description: task.description!, bool: task.completed!)
         cell.checkmarkImageViewAction = { [weak self] bool in
             task.completed = bool
+            self?.tasks[indexPath.row] = task
             self?.presenter?.updateTaskReadinessStatus(task: task)
         }
         return cell
