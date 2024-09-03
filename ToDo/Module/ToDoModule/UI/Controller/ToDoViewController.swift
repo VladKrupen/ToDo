@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ToDoViewProtocol: AnyObject {
-    
+    func updateView(tasks: [ToDo])
 }
 
 final class ToDoViewController: UIViewController {
@@ -34,16 +34,13 @@ final class ToDoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let result = presenter?.getTasks() else {
-            return
-        }
-        tasks = result
+        presenter?.getTasks()
         reloadData()
     }
     
     //MARK: Setup
     func reloadData() {
-        toDoView.reloadData()
+        self.toDoView.reloadData()
     }
     
     private func setupNavigationItem() {
@@ -63,7 +60,10 @@ extension ToDoViewController {
 
 //MARK: ToDoViewProtocol
 extension ToDoViewController: ToDoViewProtocol {
-    
+    func updateView(tasks: [ToDo]) {
+        self.tasks = tasks
+        reloadData()
+    }
 }
 
 //MARK: UITableViewDataSource
@@ -77,7 +77,7 @@ extension ToDoViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         var task = tasks[indexPath.row]
-        cell.setupCell(title: task.title!, date: task.date!, description: task.description!, bool: task.completed!)
+        cell.setupCell(title: task.title ?? "", date: task.date ?? Date(), description: task.description ?? "", bool: task.completed ?? false)
         cell.checkmarkImageViewAction = { [weak self] bool in
             task.completed = bool
             self?.tasks[indexPath.row] = task

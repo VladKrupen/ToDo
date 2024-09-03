@@ -16,7 +16,6 @@ final class TaskManagerViewController: UIViewController {
     
     //MARK: Public
     var presenter: TaskManagerPresenterProtocol?
-    var todoTransferHandler: ((ToDo, UserAction) -> Void)?
     
     //MARK: Private
     private let taskManagerView = TaskManagerView()
@@ -63,11 +62,7 @@ final class TaskManagerViewController: UIViewController {
 //MARK: TaskManagerViewProtocol
 extension TaskManagerViewController: TaskManagerViewProtocol {
     func updateView(task: ToDo) {
-        guard let title = task.title, let description = task.description else {
-            taskManagerView.configuration(title: "", description: "")
-            return
-        }
-        taskManagerView.configuration(title: title, description: description)
+        taskManagerView.configuration(title: task.title ?? "", description: task.description ?? "")
     }
     
     func presentIncompleteFieldsAlert() {

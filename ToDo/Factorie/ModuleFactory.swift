@@ -9,8 +9,9 @@ import UIKit
 
 final class ModuleFactory {
     static func createToDoModule() -> ToDoViewController {
+        let coreDataManager = CoreDataManager()
         let viewController = ToDoViewController()
-        let interactor = ToDoInteractor()
+        let interactor = ToDoInteractor(uninstallManager: coreDataManager, updateManager: coreDataManager, readingManager: coreDataManager)
         let router = ToDoRouter()
         let presenter = ToDoPresenter(view: viewController, interactor: interactor, router: router)
         viewController.presenter = presenter
@@ -21,8 +22,9 @@ final class ModuleFactory {
     }
     
     static func createTaskManagerModule(task: ToDo, action: UserAction) -> TaskManagerViewController {
+        let coreDataManager = CoreDataManager()
         let viewController = TaskManagerViewController()
-        let interactor = TaskManagerInteractor(task: task, action: action)
+        let interactor = TaskManagerInteractor(task: task, action: action, updateManager: coreDataManager, creationManager: coreDataManager)
         let router = TaskManagerRouter()
         let presenter = TaskManagerPresenter(view: viewController, interactor: interactor, router: router)
         viewController.presenter = presenter

@@ -86,11 +86,15 @@ final class ToDoCell: UITableViewCell {
     }
     
     //MARK: Setup
-    func setupCell(title: String, date: String, description: String, bool: Bool) {
+    func setupCell(title: String, date: Date, description: String, bool: Bool) {
         titleLabel.text = title
-        dateLabel.text = date
         descriptionLabel.text = description
         checked = bool
+        let currentDate = date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy\nHH:mm:ss"
+        let dateString = dateFormatter.string(from: currentDate)
+        dateLabel.text = dateString
     }
     
     private func setupGesture() {

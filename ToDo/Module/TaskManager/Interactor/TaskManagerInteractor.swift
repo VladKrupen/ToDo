@@ -17,19 +17,20 @@ final class TaskManagerInteractor {
     weak var presenter: TaskManagerPresenterProtocol?
     private var task: ToDo
     private let action: UserAction
+    private let updateManager: TaskUpdateProtocol
+    private let creationManager: TaskCreationProtocol
     
-    init(task: ToDo, action: UserAction) {
+    init(task: ToDo, action: UserAction, updateManager: TaskUpdateProtocol, creationManager: TaskCreationProtocol) {
         self.task = task
         self.action = action
+        self.updateManager = updateManager
+        self.creationManager = creationManager
     }
     
     private func createTask(title: String, description: String) -> ToDo {
         let id = UUID().uuidString
         let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy\nHH:mm:ss"
-        let dateString = dateFormatter.string(from: currentDate)
-        let newTask = ToDo(id: id, title: title, description: description, completed: false, date: dateString)
+        let newTask = ToDo(id: id, title: title, description: description, completed: false, date: currentDate)
         return newTask
     }
     
@@ -46,7 +47,9 @@ final class TaskManagerInteractor {
             return
         }
         let newTask = createTask(title: title, description: description)
-        presenter?.navigateToToDoModule(task: newTask, action: action)
+        creationManager.createTask(task: newTask) { [weak self] in
+            self?.presenter?.dismissTaskManagerModule()
+        }
     }
     
     private func manageTaskEditing(title: String, description: String) {
@@ -59,7 +62,9 @@ final class TaskManagerInteractor {
         }
         task.title = title
         task.description = description
-        presenter?.navigateToToDoModule(task: task, action: action)
+        updateManager.updateTask(task: task) { [weak self] in
+            self?.presenter?.dismissTaskManagerModule()
+        }
     }
 }
 
@@ -75,6 +80,5 @@ extension TaskManagerInteractor: TaskManagerInteractorProtocol {
         case .cellAction:
             manageTaskEditing(title: title, description: description)
         }
-       
     }
 }

@@ -8,8 +8,7 @@
 import Foundation
 
 protocol ToDoInteractorProtocol: AnyObject {
-    func getTasks() -> [ToDo]
-    func updateTasks(task: ToDo, action: UserAction)
+    func getTasks()
     func updateTaskReadinessStatus(task: ToDo)
     func deleteTask(task: ToDo)
 }
@@ -17,58 +16,37 @@ protocol ToDoInteractorProtocol: AnyObject {
 final class ToDoInteractor {
     
     weak var presenter: ToDoPresenterProtocol?
+    private let uninstallManager: TaskDeletionProtocol
+    private let updateManager: TaskUpdateProtocol
+    private let readingManager: TaskReadingProtocol
     private var tasks: [ToDo] = []
     
-    private func findIdTask(id: String?) -> Int? {
-        var indexTask: Int?
-        for (index, task) in tasks.enumerated() {
-            if task.id == id {
-                indexTask = index
-            }
-        }
-        guard let indexTask = indexTask else {
-            return nil
-        }
-        return indexTask
-    }
-    
-    private func appendTask(task: ToDo) {
-        tasks.insert(task, at: 0)
-    }
-    
-    private func changeTask(task: ToDo) {
-        guard let id = findIdTask(id: task.id) else {
-            return
-        }
-        tasks[id] = task
+    init(uninstallManager: TaskDeletionProtocol, updateManager: TaskUpdateProtocol, readingManager: TaskReadingProtocol) {
+        self.uninstallManager = uninstallManager
+        self.updateManager = updateManager
+        self.readingManager = readingManager
     }
 }
 
 extension ToDoInteractor: ToDoInteractorProtocol {
-    func getTasks() -> [ToDo] {
-        return tasks
-    }
-    
-    func updateTasks(task: ToDo, action: UserAction) {
-        switch action {
-        case .buttonAction:
-            appendTask(task: task)
-        case .cellAction:
-            changeTask(task: task)
+    func getTasks() {
+        readingManager.readTasks { [weak self] tasks in
+            guard let tasks = tasks else {
+                return
+            }
+            self?.presenter?.updateView(tasks: tasks)
         }
     }
     
     func updateTaskReadinessStatus(task: ToDo) {
-        guard let id = findIdTask(id: task.id) else {
-            return
+        updateManager.updateTask(task: task) {
+            
         }
-        tasks[id].completed = task.completed
     }
     
     func deleteTask(task: ToDo) {
-        guard let id = findIdTask(id: task.id) else {
-            return
+        uninstallManager.deleteTask(task: task) {
+            
         }
-        tasks.remove(at: id)
     }
 }

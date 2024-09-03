@@ -20,8 +20,5 @@ final class ToDoRouter: ToDoRouterProtocol {
         let taskManagerViewController = ModuleFactory.createTaskManagerModule(task: task, action: action)
         taskManagerViewController.modalPresentationStyle = .fullScreen
         viewController?.present(taskManagerViewController, animated: true)
-        taskManagerViewController.todoTransferHandler = { [weak self] task, action in
-            self?.presenter?.updateTasks(task: task, action: action)
-        }
     }
 }

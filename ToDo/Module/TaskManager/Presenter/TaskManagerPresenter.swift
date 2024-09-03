@@ -12,7 +12,6 @@ protocol TaskManagerPresenterProtocol: AnyObject {
     func didTapDoneButton(title: String, description: String)
     func dismissTaskManagerModule()
     func presentIncompleteFieldsAlert()
-    func navigateToToDoModule(task: ToDo, action: UserAction)
 }
 
 final class TaskManagerPresenter {
@@ -29,9 +28,6 @@ final class TaskManagerPresenter {
 }
 
 extension TaskManagerPresenter: TaskManagerPresenterProtocol {
-    func navigateToToDoModule(task: ToDo, action: UserAction) {
-        router.navigateToToDoModule(task: task, action: action)
-    }
     
     func didTapDoneButton(title: String, description: String) {
         interactor.didTapDoneButton(title: title, description: description)
