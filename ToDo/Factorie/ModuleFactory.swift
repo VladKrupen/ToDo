@@ -10,8 +10,10 @@ import UIKit
 final class ModuleFactory {
     static func createToDoModule() -> ToDoViewController {
         let coreDataManager = CoreDataManager()
+        let networManager = NetworkManager()
+        let userDefaultsManager = UserDefaultsManager()
         let viewController = ToDoViewController()
-        let interactor = ToDoInteractor(uninstallManager: coreDataManager, updateManager: coreDataManager, readingManager: coreDataManager)
+        let interactor = ToDoInteractor(uninstallManager: coreDataManager, updateManager: coreDataManager, readingManager: coreDataManager, creationManager: coreDataManager, networkManager: networManager, userDefaultsManager: userDefaultsManager)
         let router = ToDoRouter()
         let presenter = ToDoPresenter(view: viewController, interactor: interactor, router: router)
         viewController.presenter = presenter

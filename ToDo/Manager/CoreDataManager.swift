@@ -8,19 +8,19 @@
 import UIKit
 import CoreData
 
-protocol TaskCreationProtocol {
+protocol TaskCreationProtocol: AnyObject {
     func createTask(task: ToDo, completion: @escaping () -> Void)
 }
 
-protocol TaskReadingProtocol {
+protocol TaskReadingProtocol: AnyObject {
     func readTasks(completion: @escaping ([ToDo]?) -> Void)
 }
 
-protocol TaskUpdateProtocol {
+protocol TaskUpdateProtocol: AnyObject {
     func updateTask(task: ToDo, completion: @escaping () -> Void)
 }
 
-protocol TaskDeletionProtocol {
+protocol TaskDeletionProtocol: AnyObject {
     func deleteTask(task: ToDo, completion: @escaping () -> Void)
 }
 

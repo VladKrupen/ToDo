@@ -19,23 +19,51 @@ final class ToDoInteractor {
     private let uninstallManager: TaskDeletionProtocol
     private let updateManager: TaskUpdateProtocol
     private let readingManager: TaskReadingProtocol
+    private let creationManager: TaskCreationProtocol
+    private let networkManager: NetworkManagerProtocol
+    private let userDefaultsManager: TaskLoadingStatusProtocol
     private var tasks: [ToDo] = []
     
-    init(uninstallManager: TaskDeletionProtocol, updateManager: TaskUpdateProtocol, readingManager: TaskReadingProtocol) {
+    init(uninstallManager: TaskDeletionProtocol, updateManager: TaskUpdateProtocol, readingManager: TaskReadingProtocol, creationManager: TaskCreationProtocol, networkManager: NetworkManagerProtocol, userDefaultsManager: TaskLoadingStatusProtocol) {
         self.uninstallManager = uninstallManager
         self.updateManager = updateManager
         self.readingManager = readingManager
+        self.creationManager = creationManager
+        self.networkManager = networkManager
+        self.userDefaultsManager = userDefaultsManager
     }
-}
-
-extension ToDoInteractor: ToDoInteractorProtocol {
-    func getTasks() {
+    
+    private func getTasksFromCoreData() {
         readingManager.readTasks { [weak self] tasks in
             guard let tasks = tasks else {
                 return
             }
             self?.presenter?.updateView(tasks: tasks)
         }
+    }
+}
+
+extension ToDoInteractor: ToDoInteractorProtocol {
+    func getTasks() {
+        guard userDefaultsManager.areTasksLoadedFromNetwork() else {
+            self.networkManager.fetchTasks { [weak self] result in
+                switch result {
+                case .success(let data):
+                    data.forEach { self?.creationManager.createTask(task: $0) {
+                        
+                    } }
+                    self?.getTasksFromCoreData()
+                    self?.userDefaultsManager.updateTasksLoadedStatus()
+                case .failure(let error):
+                    print(error)
+                    DispatchQueue.main.async {
+                        self?.getTasksFromCoreData()
+                    }
+                }
+            }
+            return
+        }
+        getTasksFromCoreData()
     }
     
     func updateTaskReadinessStatus(task: ToDo) {

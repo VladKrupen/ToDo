@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct ToDo {
+struct ToDo: Codable {
     var id: String?
     var title: String?
     var description: String?
@@ -24,4 +24,19 @@ extension ToDo {
         self.completed = task.completed
         self.date = task.date
     }
+}
+
+
+struct TodoItem: Decodable {
+    let id: Int
+    let todo: String
+    let completed: Bool
+    let userId: Int
+}
+
+struct TodoResponse: Decodable {
+    let todos: [TodoItem]
+    let total: Int
+    let skip: Int
+    let limit: Int
 }
