@@ -29,6 +29,7 @@ final class ToDoPresenter {
 }
 
 extension ToDoPresenter: ToDoPresenterProtocol {
+    
     func deleteTask(task: ToDo) {
         interactor.deleteTask(task: task)
     }

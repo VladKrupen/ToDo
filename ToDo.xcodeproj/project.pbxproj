@@ -29,6 +29,7 @@
 		017B65D32C85D7B9008CF3DA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017B65D22C85D7B9008CF3DA /* CoreDataManager.swift */; };
 		017B65D72C86FBB0008CF3DA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017B65D62C86FBB0008CF3DA /* NetworkManager.swift */; };
 		017B65D92C872332008CF3DA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017B65D82C872332008CF3DA /* UserDefaultsManager.swift */; };
+		017B65DE2C8847DF008CF3DA /* CustomButtonViewToDoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017B65DD2C8847DF008CF3DA /* CustomButtonViewToDoModule.swift */; };
 		018172422C844F5A00DF4D83 /* UserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018172412C844F5A00DF4D83 /* UserAction.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		017B65D22C85D7B9008CF3DA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		017B65D62C86FBB0008CF3DA /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		017B65D82C872332008CF3DA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		017B65DD2C8847DF008CF3DA /* CustomButtonViewToDoModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonViewToDoModule.swift; sourceTree = "<group>"; };
 		018172412C844F5A00DF4D83 /* UserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 				017B65CB2C85CEF4008CF3DA /* Manager */,
 				013FBF2A2C830B3C00A12A40 /* Module */,
 				013FBEFE2C81C8AB00A12A40 /* Resources */,
+				017B65DC2C884712008CF3DA /* Shared view */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -302,6 +305,14 @@
 			path = CoreDataModel;
 			sourceTree = "<group>";
 		};
+		017B65DC2C884712008CF3DA /* Shared view */ = {
+			isa = PBXGroup;
+			children = (
+				017B65DD2C8847DF008CF3DA /* CustomButtonViewToDoModule.swift */,
+			);
+			path = "Shared view";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -388,6 +399,7 @@
 				013FBEEC2C81C85500A12A40 /* SceneDelegate.swift in Sources */,
 				018172422C844F5A00DF4D83 /* UserAction.swift in Sources */,
 				0168D27B2C8311B8007F26C1 /* TaskManagerInteractor.swift in Sources */,
+				017B65DE2C8847DF008CF3DA /* CustomButtonViewToDoModule.swift in Sources */,
 				013FBF232C81D8C000A12A40 /* ToDoCell.swift in Sources */,
 				017B65D92C872332008CF3DA /* UserDefaultsManager.swift in Sources */,
 				013FBF292C822E2E00A12A40 /* AppAssets.swift in Sources */,

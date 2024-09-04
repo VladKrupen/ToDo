@@ -44,11 +44,14 @@ final class ToDoInteractor {
 }
 
 extension ToDoInteractor: ToDoInteractorProtocol {
+    
     func getTasks() {
         guard userDefaultsManager.areTasksLoadedFromNetwork() else {
             self.networkManager.fetchTasks { [weak self] result in
                 switch result {
                 case .success(let data):
+                    
+                    //DispatchGroup
                     data.forEach { self?.creationManager.createTask(task: $0) {
                         
                     } }
@@ -68,7 +71,7 @@ extension ToDoInteractor: ToDoInteractorProtocol {
     
     func updateTaskReadinessStatus(task: ToDo) {
         updateManager.updateTask(task: task) {
-            
+            print("Готово")
         }
     }
     

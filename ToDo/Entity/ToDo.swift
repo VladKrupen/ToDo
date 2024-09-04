@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct ToDo: Codable {
+struct ToDo {
     var id: String?
     var title: String?
     var description: String?

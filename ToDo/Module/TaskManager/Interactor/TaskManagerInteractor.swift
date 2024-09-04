@@ -72,7 +72,6 @@ extension TaskManagerInteractor: TaskManagerInteractorProtocol {
     func getResult() -> ToDo {
         return task
     }
-    
     func didTapDoneButton(title: String, description: String) {
         switch action {
         case .buttonAction:
