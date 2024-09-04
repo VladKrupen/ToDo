@@ -17,10 +17,10 @@ final class TaskManagerInteractor {
     weak var presenter: TaskManagerPresenterProtocol?
     private var task: ToDo
     private let action: UserAction
-    private let updateManager: TaskUpdateProtocol
-    private let creationManager: TaskCreationProtocol
+    private let updateManager: TaskUpdate
+    private let creationManager: TaskCreation
     
-    init(task: ToDo, action: UserAction, updateManager: TaskUpdateProtocol, creationManager: TaskCreationProtocol) {
+    init(task: ToDo, action: UserAction, updateManager: TaskUpdate, creationManager: TaskCreation) {
         self.task = task
         self.action = action
         self.updateManager = updateManager
@@ -47,7 +47,11 @@ final class TaskManagerInteractor {
             return
         }
         let newTask = createTask(title: title, description: description)
-        creationManager.createTask(task: newTask) { [weak self] in
+        creationManager.createTask(task: newTask) { [weak self] error in
+            guard error == nil else {
+                self?.presenter?.presentAlertFailedToCreateTask(error: error?.localizedDescription ?? AppAssets.taskСreationError)
+                return
+            }
             self?.presenter?.dismissTaskManagerModule()
         }
     }

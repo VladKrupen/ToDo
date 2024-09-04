@@ -17,8 +17,9 @@ struct AppAssets {
     static let titleTextField: String = "Title"
     static let deleteCell: String = "Delete"
     static let alertEmptyFieldsMessage: String = "Аll in the title field"
-    static let alertEmptyFieldsAction: String = "Ok"
+    static let alertOkAction: String = "Ok"
     static let allButtonView: String = "All"
     static let openButtonView: String = "Open"
     static let closedButtonView: String = "Closed"
+    static let taskСreationError: String = "Task creation error"
 }

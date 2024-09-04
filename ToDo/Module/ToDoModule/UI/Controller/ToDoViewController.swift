@@ -150,7 +150,6 @@ extension ToDoViewController: ToDoViewProtocol {
         guard let secondsUntilNextDay = calendar.dateComponents([.second], from: date, to: tomorrow).second else {
             return
         }
-        print(secondsUntilNextDay)
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(secondsUntilNextDay)) {
             self.presenter?.getCurrentDate()
         }

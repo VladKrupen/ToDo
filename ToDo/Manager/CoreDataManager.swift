@@ -8,23 +8,23 @@
 import UIKit
 import CoreData
 
-protocol TaskCreationProtocol: AnyObject {
-    func createTask(task: ToDo, completion: @escaping () -> Void)
+protocol TaskCreation: AnyObject {
+    func createTask(task: ToDo, completion: @escaping (Error?) -> Void)
 }
 
-protocol TaskReadingProtocol: AnyObject {
+protocol TaskReading: AnyObject {
     func readTasks(completion: @escaping ([ToDo]?) -> Void)
 }
 
-protocol TaskUpdateProtocol: AnyObject {
+protocol TaskUpdate: AnyObject {
     func updateTask(task: ToDo, completion: @escaping () -> Void)
 }
 
-protocol TaskDeletionProtocol: AnyObject {
+protocol TaskDeletion: AnyObject {
     func deleteTask(task: ToDo, completion: @escaping () -> Void)
 }
 
-final class CoreDataManager: TaskCreationProtocol, TaskReadingProtocol, TaskUpdateProtocol, TaskDeletionProtocol {
+final class CoreDataManager: TaskCreation, TaskReading, TaskUpdate, TaskDeletion {
     
     private var appDelegate: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -34,7 +34,7 @@ final class CoreDataManager: TaskCreationProtocol, TaskReadingProtocol, TaskUpda
         return appDelegate.persistentContainer.viewContext
     }
     
-    func createTask(task: ToDo, completion: @escaping () -> Void) {
+    func createTask(task: ToDo, completion: @escaping (Error?) -> Void) {
         let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             privateContext.parent = context
         DispatchQueue.global(qos: .userInitiated).async {
@@ -47,10 +47,11 @@ final class CoreDataManager: TaskCreationProtocol, TaskReadingProtocol, TaskUpda
             do {
                 try privateContext.save()
                 DispatchQueue.main.async {
-                    completion()
+                    completion(nil)
                 }
             } catch {
                 print("Error when saving task: \(error)")
+                completion(error)
             }
         }
     }

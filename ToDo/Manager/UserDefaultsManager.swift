@@ -14,13 +14,13 @@ protocol TaskLoadingStatusProtocol {
 
 final class UserDefaultsManager: TaskLoadingStatusProtocol {
     private let userDefaults = UserDefaults.standard
-    private let key: String = "Network"
+    private let taskLoadedKey: String = "Network"
     
     func areTasksLoadedFromNetwork() -> Bool {
-        return userDefaults.bool(forKey: key)
+        return userDefaults.bool(forKey: taskLoadedKey)
     }
     
     func updateTasksLoadedStatus() {
-        userDefaults.set(true, forKey: key)
+        userDefaults.set(true, forKey: taskLoadedKey)
     }
 }

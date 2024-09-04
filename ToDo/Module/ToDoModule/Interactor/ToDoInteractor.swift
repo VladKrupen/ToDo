@@ -17,15 +17,15 @@ protocol ToDoInteractorProtocol: AnyObject {
 final class ToDoInteractor {
     
     weak var presenter: ToDoPresenterProtocol?
-    private let uninstallManager: TaskDeletionProtocol
-    private let updateManager: TaskUpdateProtocol
-    private let readingManager: TaskReadingProtocol
-    private let creationManager: TaskCreationProtocol
+    private let uninstallManager: TaskDeletion
+    private let updateManager: TaskUpdate
+    private let readingManager: TaskReading
+    private let creationManager: TaskCreation
     private let networkManager: NetworkManagerProtocol
     private let userDefaultsManager: TaskLoadingStatusProtocol
     private var tasks: [ToDo] = []
     
-    init(uninstallManager: TaskDeletionProtocol, updateManager: TaskUpdateProtocol, readingManager: TaskReadingProtocol, creationManager: TaskCreationProtocol, networkManager: NetworkManagerProtocol, userDefaultsManager: TaskLoadingStatusProtocol) {
+    init(uninstallManager: TaskDeletion, updateManager: TaskUpdate, readingManager: TaskReading, creationManager: TaskCreation, networkManager: NetworkManagerProtocol, userDefaultsManager: TaskLoadingStatusProtocol) {
         self.uninstallManager = uninstallManager
         self.updateManager = updateManager
         self.readingManager = readingManager
@@ -42,6 +42,24 @@ final class ToDoInteractor {
             self?.presenter?.updateView(tasks: tasks)
         }
     }
+    
+    private func addTheReceivedDataToTheCoreData(data: [ToDo]) {
+        let dispatchGroup = DispatchGroup()
+        for task in data {
+            dispatchGroup.enter()
+            creationManager.createTask(task: task, completion: { [weak self] error in
+                guard error == nil else {
+                    dispatchGroup.leave()
+                    return
+                }
+                dispatchGroup.leave()
+            })
+        }
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.getTasksFromCoreData()
+            self?.userDefaultsManager.updateTasksLoadedStatus()
+        }
+    }
 }
 
 extension ToDoInteractor: ToDoInteractorProtocol {
@@ -54,15 +72,8 @@ extension ToDoInteractor: ToDoInteractorProtocol {
             self.networkManager.fetchTasks { [weak self] result in
                 switch result {
                 case .success(let data):
-                    
-                    //DispatchGroup
-                    data.forEach { self?.creationManager.createTask(task: $0) {
-                        
-                    } }
-                    self?.getTasksFromCoreData()
-                    self?.userDefaultsManager.updateTasksLoadedStatus()
+                    self?.addTheReceivedDataToTheCoreData(data: data)
                 case .failure(let error):
-                    print(error)
                     DispatchQueue.main.async {
                         self?.getTasksFromCoreData()
                     }

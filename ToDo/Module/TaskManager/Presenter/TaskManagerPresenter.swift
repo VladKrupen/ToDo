@@ -12,6 +12,7 @@ protocol TaskManagerPresenterProtocol: AnyObject {
     func didTapDoneButton(title: String, description: String)
     func dismissTaskManagerModule()
     func presentIncompleteFieldsAlert()
+    func presentAlertFailedToCreateTask(error: String)
 }
 
 final class TaskManagerPresenter {
@@ -28,6 +29,9 @@ final class TaskManagerPresenter {
 }
 
 extension TaskManagerPresenter: TaskManagerPresenterProtocol {
+    func presentAlertFailedToCreateTask(error: String) {
+        view?.presentAlertFailedToCreateTask(error: error)
+    }
     
     func didTapDoneButton(title: String, description: String) {
         interactor.didTapDoneButton(title: title, description: description)

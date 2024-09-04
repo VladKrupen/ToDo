@@ -101,12 +101,22 @@ final class ToDoCell: UITableViewCell {
     }
     
     private func setupDateLabel(date: Date) {
-        let currentDate = date
         let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "dd/MM/yyyy\nHH:mm:ss"
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-        let dateString = dateFormatter.string(from: currentDate)
-        dateLabel.text = dateString
+        let calendar = Calendar.current
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: Date())!
+        if calendar.isDateInToday(date) {
+            dateFormatter.dateFormat = "h:mma"
+            let formattedTime = dateFormatter.string(from: date)
+            dateLabel.text = "Today \(formattedTime)"
+        } else if calendar.isDateInYesterday(date) {
+            dateFormatter.dateFormat = "dd.MM.yyyy h:mma"
+            let formattedDate = dateFormatter.string(from: yesterday)
+            dateLabel.text = formattedDate
+        } else {
+            dateFormatter.dateFormat = "dd.MM.yyyy h:mma"
+            let formattedDate = dateFormatter.string(from: date)
+            dateLabel.text = formattedDate
+        }
     }
     
     private func setupDescriptionLabel(description: String) {
