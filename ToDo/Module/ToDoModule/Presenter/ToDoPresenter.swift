@@ -13,6 +13,7 @@ protocol ToDoPresenterProtocol: AnyObject {
     func updateTaskReadinessStatus(task: ToDo)
     func deleteTask(task: ToDo)
     func updateView(tasks: [ToDo])
+    func getCurrentDate()
 }
 
 final class ToDoPresenter {
@@ -29,6 +30,11 @@ final class ToDoPresenter {
 }
 
 extension ToDoPresenter: ToDoPresenterProtocol {
+    func getCurrentDate() {
+        let currentDate = interactor.getCurrentDate()
+        view?.updateCurrentDate(date: currentDate)
+        view?.startTheCurrentDateUpdateTimer(date: currentDate)
+    }
     
     func deleteTask(task: ToDo) {
         interactor.deleteTask(task: task)

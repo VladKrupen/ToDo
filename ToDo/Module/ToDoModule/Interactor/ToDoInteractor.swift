@@ -11,6 +11,7 @@ protocol ToDoInteractorProtocol: AnyObject {
     func getTasks()
     func updateTaskReadinessStatus(task: ToDo)
     func deleteTask(task: ToDo)
+    func getCurrentDate() -> Date
 }
 
 final class ToDoInteractor {
@@ -44,6 +45,9 @@ final class ToDoInteractor {
 }
 
 extension ToDoInteractor: ToDoInteractorProtocol {
+    func getCurrentDate() -> Date {
+        return Date()
+    }
     
     func getTasks() {
         guard userDefaultsManager.areTasksLoadedFromNetwork() else {
@@ -71,7 +75,7 @@ extension ToDoInteractor: ToDoInteractorProtocol {
     
     func updateTaskReadinessStatus(task: ToDo) {
         updateManager.updateTask(task: task) {
-            print("Готово")
+    
         }
     }
     

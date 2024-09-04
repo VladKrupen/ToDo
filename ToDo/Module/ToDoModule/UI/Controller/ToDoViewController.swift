@@ -9,6 +9,8 @@ import UIKit
 
 protocol ToDoViewProtocol: AnyObject {
     func updateView(tasks: [ToDo])
+    func updateCurrentDate(date: Date)
+    func startTheCurrentDateUpdateTimer(date: Date)
 }
 
 final class ToDoViewController: UIViewController {
@@ -33,6 +35,7 @@ final class ToDoViewController: UIViewController {
         toDoView.setupDelegateAndDataSource(delegate: self, dataSource: self)
         newTaskButtonTapped()
         buttonViewTapped()
+        presenter?.getCurrentDate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +44,7 @@ final class ToDoViewController: UIViewController {
         tagButtonView = 1
         toDoView.setColorForButtonView()
         reloadData()
+        
     }
     
     //MARK: Setup
@@ -134,6 +138,27 @@ final class ToDoViewController: UIViewController {
 
 //MARK: ToDoViewProtocol
 extension ToDoViewController: ToDoViewProtocol {
+    func startTheCurrentDateUpdateTimer(date: Date) {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        guard let calendarDate = calendar.date(from: components) else {
+            return
+        }
+        guard let tomorrow = calendar.date(byAdding: .day, value: 1, to: calendarDate) else {
+            return
+        }
+        guard let secondsUntilNextDay = calendar.dateComponents([.second], from: date, to: tomorrow).second else {
+            return
+        }
+        print(secondsUntilNextDay)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(secondsUntilNextDay)) {
+            self.presenter?.getCurrentDate()
+        }
+    }
+    
+    func updateCurrentDate(date: Date) {
+        toDoView.setCurrentDate(date: date)
+    }
     
     func updateView(tasks: [ToDo]) {
         self.tasks = tasks

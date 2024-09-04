@@ -26,7 +26,6 @@ final class ToDoView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textAlignment = .left
         $0.numberOfLines = 1
-        $0.text = "Wednesday, 11 May"
         $0.font = UIFont.systemFont(ofSize: 16, weight: .thin)
         return $0
     }(UILabel())
@@ -51,21 +50,21 @@ final class ToDoView: UIView {
     
     private let allButtonView: CustomButtonViewToDoModule = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitle(title: "All")
+        $0.setTitle(title: AppAssets.allButtonView)
         $0.setColor(color: .systemBlue)
         return $0
     }(CustomButtonViewToDoModule())
     
     private let openButtonView: CustomButtonViewToDoModule = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitle(title: "Open")
+        $0.setTitle(title: AppAssets.openButtonView)
         $0.setColor(color: .systemGray2)
         return $0
     }(CustomButtonViewToDoModule())
     
     private let closedButtonView: CustomButtonViewToDoModule = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setTitle(title: "Closed")
+        $0.setTitle(title: AppAssets.closedButtonView)
         $0.setColor(color: .systemGray2)
         return $0
     }(CustomButtonViewToDoModule())
@@ -124,6 +123,14 @@ final class ToDoView: UIView {
         allButtonView.setColor(color: .systemBlue)
         openButtonView.setColor(color: .systemGray2)
         closedButtonView.setColor(color: .systemGray2)
+    }
+    
+    func setCurrentDate(date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, d MMMM"
+        dateFormatter.locale = Locale(identifier: "en_US")
+        let dateString = dateFormatter.string(from: date)
+        dayOfTheWeekLabel.text = dateString
     }
     
     private func setupTapGesture() {

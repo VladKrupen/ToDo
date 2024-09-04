@@ -65,7 +65,6 @@ final class CoreDataManager: TaskCreationProtocol, TaskReadingProtocol, TaskUpda
             do {
                 let tasks = try privateContext.fetch(fetchRequest)
                 let todos = tasks.map { ToDo(task: $0) }
-                print(todos)
                 DispatchQueue.main.async {
                     completion(todos)
                 }
